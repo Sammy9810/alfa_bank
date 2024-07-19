@@ -8,12 +8,13 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 options = Options()
+options.add_argument('log-level=3')
 options.add_argument('--headless')
 options.add_argument('--incognito')
-options.add_argument('--disable-gpu')
-options.add_argument('--no-sandbox')
 options.add_argument("--start-maximized")
+options.add_argument('--ignore-certificate-errors')
 options.add_argument("--window-size=1920x1080")
+
 
 service = Service(executable_path=ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
@@ -33,9 +34,9 @@ wait.until(EC.visibility_of_element_located(BUTTON_NEXT))
 driver.find_element(*BUTTON_NEXT).click()
 
 # вводим логин и пароль
+driver.save_screenshot('Авторизация.png')
 login = input('Введите логин (номер телефона): +7')
 login = '7' + login
-
 AREA_LOGIN = ('xpath', '//input[@type="text"]')
 wait.until(EC.visibility_of_element_located(AREA_LOGIN))
 driver.find_element(*AREA_LOGIN).send_keys(login)
@@ -45,16 +46,18 @@ AREA_PASSWORD = ('xpath', '//input[@type="password"]')
 wait.until(EC.visibility_of_element_located(AREA_PASSWORD))
 driver.find_element(*AREA_PASSWORD).send_keys(password)
 
+driver.save_screenshot('Логин и пароль.png')
 BUTTON_AUTHORIZATION = ('xpath', '//button[@type="submit"]')
 wait.until(EC.element_to_be_clickable(BUTTON_AUTHORIZATION))
 driver.find_element(*BUTTON_AUTHORIZATION).click()
 
 # вводим код из смс
+driver.save_screenshot('Перед смс.png')
 sms = input('Введите код из смс: ')
 SMS_ENTER = ('xpath', '//input[@inputmode="numeric"]')
 wait.until(EC.visibility_of_element_located(SMS_ENTER))
 driver.find_element(*SMS_ENTER).send_keys(sms)
-
+driver.save_screenshot('После смс.png')
 # не доверяем устройству
 try:
     DISAGREE_BUTTON = ('xpath', "//span[text()='Не доверять']")
