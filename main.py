@@ -34,7 +34,6 @@ wait.until(EC.visibility_of_element_located(BUTTON_NEXT))
 driver.find_element(*BUTTON_NEXT).click()
 
 # вводим логин и пароль
-driver.save_screenshot('Авторизация.png')
 login = input('Введите логин (номер телефона): +7')
 login = '7' + login
 AREA_LOGIN = ('xpath', '//input[@type="text"]')
@@ -46,13 +45,11 @@ AREA_PASSWORD = ('xpath', '//input[@type="password"]')
 wait.until(EC.visibility_of_element_located(AREA_PASSWORD))
 driver.find_element(*AREA_PASSWORD).send_keys(password)
 
-driver.save_screenshot('Логин и пароль.png')
 BUTTON_AUTHORIZATION = ('xpath', '//button[@type="submit"]')
 wait.until(EC.element_to_be_clickable(BUTTON_AUTHORIZATION))
 driver.find_element(*BUTTON_AUTHORIZATION).click()
 
 # вводим код из смс
-driver.save_screenshot('Перед смс.png')
 sms = input('Введите код из смс: ')
 SMS_ENTER = ('xpath', '//input[@inputmode="numeric"]')
 wait.until(EC.visibility_of_element_located(SMS_ENTER))
@@ -129,3 +126,5 @@ for category_web in all_category_web:
     BUTTON_CLOSE = ('xpath', '//button[@aria-label="закрыть"]')
     wait.until(EC.visibility_of_element_located(BUTTON_CLOSE))
     driver.find_element(*BUTTON_CLOSE).click()
+
+print('Процесс завершен.')
